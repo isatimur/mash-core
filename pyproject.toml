@@ -1,0 +1,69 @@
+## Dual-compat: PEP 621 `[project]` is read by pip and modern build tools.
+## Poetry 1.8.x reads `[tool.poetry]` — keep both in sync on version bumps.
+
+[project]
+name = "mash-core"
+version = "0.1.0"
+description = "Provider-agnostic LLM-judge core: JudgeDim/JudgeScore contract, cost-aware model routing, retry-with-backoff. Extracted from book-mash."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Timur Isachenko"}]
+keywords = ["llm-judge", "evaluation", "mash", "pydantic-ai"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "pydantic>=2.9,<3.0",
+    "pydantic-ai>=0.0.40,<0.0.41",
+    "anthropic>=0.49,<0.50",
+    "openai>=1.50,<2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9.0",
+    "pytest-asyncio>=0.24,<0.25",
+    "pytest-mock>=3.14,<4.0",
+    "mypy>=1.13,<2.0",
+    "ruff>=0.7,<1.0",
+]
+
+# Legacy Poetry 1.x metadata. Mirrors `[project]` above — keep them in sync.
+[tool.poetry]
+name = "mash-core"
+version = "0.1.0"
+description = "Provider-agnostic LLM-judge core: JudgeDim/JudgeScore contract, cost-aware model routing, retry-with-backoff. Extracted from book-mash."
+authors = ["Timur Isachenko"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "mash_core"}]
+
+[tool.poetry.dependencies]
+python = "^3.13,<3.14"
+pydantic = "^2.9"
+pydantic-ai = "^0.0.40"
+anthropic = "^0.49"
+openai = "^1.50"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3"
+pytest-asyncio = "^0.24"
+pytest-mock = "^3.14"
+mypy = "^1.13"
+ruff = "^0.7"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
