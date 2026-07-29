@@ -8,6 +8,9 @@ _PRICE_PER_TOKEN: dict[str, dict[str, float]] = {
     "openrouter:moonshotai/kimi-k2-0905": {"input": 0.60 / 1_000_000, "output": 2.50 / 1_000_000},
     "openrouter:qwen/qwen3-235b-a22b-2507": {"input": 0.09 / 1_000_000, "output": 0.55 / 1_000_000},
     "openrouter:z-ai/glm-4.7": {"input": 0.40 / 1_000_000, "output": 1.75 / 1_000_000},
+    "openrouter:meta-llama/llama-3.3-70b-instruct": {"input": 0.10 / 1_000_000, "output": 0.32 / 1_000_000},
+    "openrouter:qwen/qwen-2.5-72b-instruct": {"input": 0.36 / 1_000_000, "output": 0.40 / 1_000_000},
+    "openrouter:deepseek/deepseek-chat": {"input": 0.20 / 1_000_000, "output": 0.80 / 1_000_000},
 }
 
 
