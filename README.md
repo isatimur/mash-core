@@ -23,15 +23,28 @@ Path-dependency install from a sibling consumer project (e.g. book-mash):
 mash-core = {path = "../mash-core", develop = true}
 ```
 
+## Commands
+
+```bash
+poetry run pytest          # 27 tests, no LLM calls
+poetry run ruff check .    # lint
+poetry run mypy mash_core  # type check
+```
+
 ## What's here
 
 - `mash_core.models` — `JudgeLabel`, `UnitType`, `JudgeScore`, `JudgeInput`, `JudgeResult`.
 - `mash_core.base` — the `JudgeDim` ABC every judge dimension implements.
 - `mash_core.model_factory` — `build_judge_model()`, provider-configurable via
   `BOOK_MASH_JUDGE_PROVIDER` / `BOOK_MASH_JUDGE_MODEL` / `BOOK_MASH_JUDGE_BASE_URL` /
-  `BOOK_MASH_JUDGE_API_KEY_ENV` env vars.
+  `BOOK_MASH_JUDGE_API_KEY_ENV` env vars. Returns a `(model, model_id)` tuple; the
+  `model_id` is provider-prefixed for non-Anthropic providers so a provider switch
+  always busts the cache.
 - `mash_core.model_settings` — `JUDGE_MODEL_SETTINGS` (temperature=0, timeout, max_tokens cap).
 - `mash_core.pricing` — `estimate_cost(model_id, input_tokens, output_tokens)`.
 - `mash_core.retry` — `run_with_backoff(factory, ...)`.
+
+All of the above are re-exported from `mash_core` (see `mash_core/__init__.py`),
+so consumers import from the package root: `from mash_core import JudgeDim, JudgeScore, build_judge_model`.
 
 License: MIT.
