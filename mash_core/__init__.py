@@ -9,8 +9,14 @@ from mash_core.model_factory import (
 from mash_core.model_settings import JUDGE_MODEL_SETTINGS, JUDGE_REQUEST_TIMEOUT_S
 from mash_core.pricing import estimate_cost
 from mash_core.retry import run_with_backoff
+from mash_core.audit import audited_agent_run, configure, record_call
+from mash_core.pii import scan_text
 
 __all__ = [
+    "audited_agent_run",
+    "configure",
+    "record_call",
+    "scan_text",
     "JudgeInput",
     "JudgeLabel",
     "JudgeResult",

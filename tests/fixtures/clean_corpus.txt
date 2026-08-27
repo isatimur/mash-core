@@ -1,0 +1,22 @@
+The engine scores a manuscript in a single pipeline pass and writes three output layers.
+book-mash depends on mash_core, a sibling package that holds the provider-agnostic judge contract.
+Key: sha256(unit_text + optional_ctx_key) | dim_name | dim_version | model_id. Lives at cache.json.
+Editing one chapter invalidates only that chapter's hashes; reruns typically reuse ~90% of prior calls.
+The approved contract SHA-256 is 1b3c0aa1afba10e17bddb093a13ef34fd5aeed8d54876a683507f3d448264e39.
+Commit 9f3c2ad1e4b7c8d0a1f2e3b4c5d6e7f8a9b0c1d2 fixed the retry backoff jitter.
+DEFAULT_JUDGE_MODEL_ID = "claude-sonnet-4-6"  # the previously hardwired Anthropic model id
+Provider-prefix the cache-key id so an OpenRouter run never collides with an Anthropic-keyed score.
+This is the first paragraph. It has a specific claim about delegation. It spans two lines.
+The second paragraph extends the idea concretely. Here is another paragraph in the second section.
+Two semaphores, both env-tunable: global in-flight judge calls and a heavy-prompt cap.
+Heavy judges hold both semaphores; light judges hold only the global one, so there is no deadlock risk.
+Rate limits (HTTP 429) and transient overload (Anthropic's 529, plus 5xx) recover instead of gapping.
+Backoff honors a Retry-After header when the API sends one, otherwise exponential backoff with jitter.
+The manuscript under test is partly Claude-written, so a non-Claude judge is a more objective grader.
+Version 0.1.0 of mash-core targets Python 3.13 and pydantic 2.9 with pydantic-ai 0.0.40.
+The order id was 100200300400 and the run took 3.14159 seconds across 42 chapters.
+A weighted mean rolls paragraph scores up to sections using char counts as weights.
+Native scores are produced directly by a judge at its declared unit_type: paragraph, section, chapter.
+Broadcast scores propagate a chapter-native score down to every paragraph with derived=True.
+The ledger records total_cost_usd and a status of completed or halted_budget for each run.
+Fixtures live in tests/fixtures and live tests are marked so they are excluded from the default run.
